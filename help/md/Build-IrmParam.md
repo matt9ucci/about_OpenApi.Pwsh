@@ -19,8 +19,10 @@ Build-IrmParam [-OpenApiName] <String> [-OperationId] <String> [<CommonParameter
 
 ## DESCRIPTION
 
-Builds a paramter for `Invoke-RestMethod` cmdlet to invoke an API defined in an OpenAPI document.
-The parameter is a `[hashtable]`, which can be used as a splatting variable.
+Builds and returns a paramter for `Invoke-RestMethod` cmdlet to invoke an API defined in an OpenAPI document.
+
+The returned parameter is a `[hashtable]`, which is set in the `$IrmParam` variable automatically.
+Both the returned parameter and the `$IrmParam` automatic variable can be used as a splatting variable for `Invoke-RestMethod`.
 
 If the generated parameter is not suitable for your needs, edit the OpenAPI document and try it again.
 
@@ -45,6 +47,17 @@ Invoke-RestMethod @params -FollowRelLink
 ```
 
 The `Invoke-RestMethod` accepts the `$params` as a splatting variable and `-FollowRelLink` as an additional switch.
+
+### Example 2
+
+```powershell
+Build-IrmParam -OpenApiName UserApi -OperationId GetUser
+Invoke-RestMethod @IrmParam -FollowRelLink
+```
+
+The example shows that the `Invoke-RestMethod` cmdlet is invoked by splatting with the `$IrmParam` variable.
+
+The `$IrmParam` variable, which is automatically set when invoking the `Build-IrmParam` cmdlet, is same as the hash table returned by the `Build-IrmParam`.
 
 ## PARAMETERS
 
